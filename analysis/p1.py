@@ -10,9 +10,10 @@ import scipy.stats
 engine = create_engine('mysql://root:blue@localhost:3306/imdb')
 conn = engine.connect()
 conn.begin()
-data = pandas.read_sql_query("select Budget, GrossProfit from movie where Country='USA' and Budget is not null and GrossProfit is not null", conn)
+# Gross Profit as actually just revenue.
+data = pandas.read_sql_query("select Budget, (cast(GrossProfit as signed) - cast(Budget as signed )) as Profit from movie where Country='USA' and Budget is not null and GrossProfit is not null", conn)
 x = data["Budget"].values.reshape(-1, 1)
-y = data["GrossProfit"].values.reshape(-1, 1)
+y = data["Profit"].values.reshape(-1, 1)
 #Lets
 #Lets create
 plt.scatter(x, y, marker='o', s=1.0)
@@ -26,4 +27,5 @@ print('Spearman\'s Correlation: ', scipy.stats.spearmanr(x, y));
 # The mean squared error
 print("Mean squared error: %.2f" % mean_squared_error(x, y))
 plt.plot(x, pred, color='black', linewidth=2)
+plt.title("Movie Budget vs. Gross Profit in USA")
 plt.show()
