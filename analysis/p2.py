@@ -21,6 +21,25 @@ plt.scatter(data["Runtime"], data["Profit"])  # set up a scatter plot to display
 plt.title("Movie Runtime vs Gross Profit")
 plt.xlabel("Runtime (minutes)")
 plt.ylabel("Gross Profit (100 million dollars)")
+
+x = data["Runtime"].reshape(-1, 1)
+y = data["Profit"].reshape(-1, 1)
+
+# Lets do some linear regression on the Runtime/Rating
+regr = linear_model.LinearRegression()  # calculate regression line for this data
+regr.fit(x, y)
+pred = regr.predict(x)
+# The coefficients
+print('Regression Coefficient (Slope): \n',
+      regr.coef_)  # prints out the regression line coefficients from the scatter plot
+print('Pearson\'s Correlation: ', stats.pearsonr(x, y))  # calculates and prints Pearson's correlation coefficient
+#  based on data from the scatter plot
+print('Spearman\'s Correlation: ', stats.spearmanr(x, y))  # calculates and prints Spearman's rank correlation
+# coefficient based on data from the scatter plot
+print("Mean squared error: %.2f" % metrics.mean_squared_error(x, y))  # calculates and prints the mean squared error
+plt.plot(x, pred, color='black',
+         linewidth=2)  # displayes a scatter plot popup window with the data from the queries and regression line
+
 plt.show()
 
 plt.scatter(data2["Runtime"], data2["Rating"])  # set up a scatter plot to display data2 found from query
