@@ -37,4 +37,6 @@ print("Mean squared error: %.2f" % mean_squared_error(x, y))  # calculates and p
 plt.plot(x, pred, color='black',
          linewidth=2)  # displayes a scatter plot popup window with the data from the queries and regression line
 plt.title("Movie Budget vs. Gross Profit in USA")
+plt.xlabel("Movie Budget (100 million dollars)")
+plt.ylabel("Gross Profit (100 million dollars)")
 plt.show()
