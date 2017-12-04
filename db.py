@@ -9,10 +9,10 @@ class db:
         self.conn.begin()
 
     def query(self, query):
-        return pandas.read_sql_query(query, self.conn)
+        return pandas.read_sql_query(query, self.conn)#returns the results of the given query from the database
 
     def table(self, table):
-        return pandas.read_sql_table(table, self.conn)
+        return pandas.read_sql_table(table, self.conn)#returns an unedited table from the database
 
-    def disconnect(self):
+    def disconnect(self):# close this connection to the database
         self.conn.close()

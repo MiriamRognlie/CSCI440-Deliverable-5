@@ -9,7 +9,7 @@ from sklearn.pipeline import make_pipeline
 
 def p2(db):
     # Question 2: Does​ ​the​ ​length​ ​of​ ​a​ ​movie​ ​affect​ ​its​ ​profitability​ ​or​ ​ratings?​ ​Is​ ​there​ ​a​ ​point​ ​where​ ​a movie​ ​is​ ​too​ ​short​ ​or​ ​too​ ​long?​ ​Is​ ​the​ ​optimal​ ​length​ ​of​ ​a​ ​movie​ ​influenced​ ​by​ ​its​ ​genre?
-    # Run a query so "data" is a table containing the runtime of all movies made in the USA and their profit (calculated as gross -budget)
+    # Run a query so "data" is a table containing the runtime of all movies made in the USA and their profit (calculated as gross-budget, since GrossProfic was inaccurately names in the database)
     data =  db.query(
         "SELECT Runtime, (cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) AS Profit FROM movie WHERE Country = 'USA' AND GrossProfit IS NOT NULL AND Budget IS NOT NULL and Runtime is not null order by Runtime")
     # Run a query so "data2" is a table containing the runtime of all movies and their ratings
