@@ -22,5 +22,7 @@ for country in countries["Country"]:
         plt.plot(query["Year"], query["GrossProfit"], label=genres["Name"][k])
         print(query)
     plt.title("Profitability of Genres in the " + country)
+    plt.xlabel("Year")
+    plt.ylabel("Average Gross Profit")
     plt.legend()
     plt.show()

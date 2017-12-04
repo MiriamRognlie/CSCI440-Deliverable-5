@@ -36,4 +36,6 @@ print("Mean squared error: %.2f" % mean_squared_error(x, y))  # calculates and p
 plt.plot(x, pred, color='black',
          linewidth=2)  # displays a scatter plot popup window with the data from the queries and regression line
 plt.title("Movie Rating vs. Director's Facebook Likes")
+plt.xlabel("Movie Rating (out of 10)")
+plt.ylabel("Director's Facebook Likes")
 plt.show()

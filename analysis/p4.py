@@ -36,7 +36,9 @@ labels = ["G", "PG", "PG-13", "R", "NC-17"]
 fig = plt.figure(1, figsize=(9, 6))  # set up a box and whisker plot to show this data
 ax = fig.add_subplot(111)
 bp = ax.boxplot(data, labels=labels)  # create labels for the plot
-plt.title("Gross Profitability of Content Ratings")
+plt.title("Gross Profitability of Content Ratings in the USA")
+plt.xlabel("Content Rating")
+plt.ylabel("Gross Profit")
 plt.show()
 
 for k, v in enumerate(labels):
