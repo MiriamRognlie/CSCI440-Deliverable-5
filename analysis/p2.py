@@ -27,6 +27,6 @@ print(genres)
 for k, i in enumerate(genres["id"]):#go through each genre that exists in the database
     genre_grouped_profit = pandas.read_sql_query("select Runtime, (cast(GrossProfit as signed) - cast(Budget as signed )) as Profit, genre_id from (movie join movie_has_genre on Movie_id=movie.id) where Country = 'USA' and genre_id=" + str(i), conn)
     plt.title("Movie Runtime vs. Gross Profit", fontsize='small')
-    plt.scatter(genre_grouped_profit["Runtime"], genre_grouped_profit["Profit"], marker='o', label=genres["Name"][k])#show a line for each genre 
+    plt.scatter(genre_grouped_profit["Runtime"], genre_grouped_profit["Profit"], marker='o', label=genres["Name"][k])#show a line for each genre
 plt.legend()
 plt.show()
