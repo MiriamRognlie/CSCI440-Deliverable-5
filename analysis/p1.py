@@ -5,7 +5,7 @@ from sklearn.metrics import mean_squared_error
 from sqlalchemy import create_engine
 
 # Question 1: How​ ​is​ ​a​ ​movie’s​ ​budget​ ​related​ ​to​ ​the​ ​gross​ ​profit​ ​of​ ​a​ ​movie?​ ​Is​ ​there​
-# ​a​ ​point​ ​where putting​ ​more​ ​money​ ​into​ ​a​ ​movie​ ​yields​ ​diminishing​ ​returns?​​ 
+# ​a​ ​point​ ​where putting​ ​more​ ​money​ ​into​ ​a​ ​movie​ ​yields​ ​diminishing​ ​returns?​​
 # Gross Profit as actually just revenue. Run a query so "data" is a table containing the Budget for amomvie and the
 # profit returned from the box office.  This displayes only movies from the USA to ensure a common currency
 data = db.query(
