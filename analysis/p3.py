@@ -13,7 +13,7 @@ conn.begin()
 # Run a query so "data" is a table containing the rating and Gross profit for each movie and the number of likes its director has on
 # Facebook
 data = pandas.read_sql_query(
-    "select Rating, GrossProfit, FacebookLikes from (movie join person_directs_movie on Movie_id=movie.id) where Rating is not NULL and GrossProfit is not NULL ",
+    "select Rating, GrossProfit, FacebookLikes from (movie join person_directs_movie on Movie_id=movie.id) where Rating is not NULL and GrossProfit is not NULL and Country = 'USA'",
     conn)
 #Analyze rating vs facebook likes
 x = data["Rating"].values.reshape(-1, 1)  # set up x an y axis for plotting data
@@ -62,6 +62,6 @@ print("Mean squared error: %.2f" % mean_squared_error(x, y))  # calculates and p
 plt.plot(x, pred, color='black',
          linewidth=2)  # displays a scatter plot popup window with the data from the queries and regression line
 plt.title("Movie Profit vs. Director's Facebook Likes")
-plt.xlabel("Movie Profit")
+plt.xlabel("Movie Profit (100 million dollars")
 plt.ylabel("Director's Facebook Likes")
 plt.show()
