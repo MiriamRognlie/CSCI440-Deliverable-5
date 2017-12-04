@@ -1,8 +1,8 @@
 from sqlalchemy.engine import create_engine
 import pandas
 
-class db:
 
+class db:
     def __init__(self):
         self.engine = create_engine('mysql://root:blue@localhost:3306/imdb')  # create connection to our movie database
         self.conn = self.engine.connect()
@@ -13,3 +13,6 @@ class db:
 
     def table(self, table):
         return pandas.read_sql_table(table, self.conn)
+
+    def disconnect(self):
+        self.conn.close()
