@@ -1,20 +1,15 @@
 import matplotlib.pyplot as plt
-import pandas
 import scipy.stats
 from sklearn import linear_model
 from sklearn.metrics import mean_squared_error
 from sqlalchemy import create_engine
 
 # Question 3: Is​ ​the​ ​director’s​ ​popularity​ ​(based​ ​on​ ​Facebook​ ​likes)​ ​statistically​ ​correlated​
-# ​with​ ​the ratings​ ​or​ ​the​ ​profitability​ ​of​ ​a​ ​film?​ Create the MySQL Engine
-engine = create_engine('mysql://root:blue@localhost:3306/imdb')  # create connection to our movie database
-conn = engine.connect()
-conn.begin()
+# ​with​ ​the ratings​ ​or​ ​the​ ​profitability​ ​of​ ​a​ ​film?​
 # Run a query so "data" is a table containing the rating and Gross profit for each movie and the number of likes its director has on
 # Facebook
-data = pandas.read_sql_query(
-    "select Rating, GrossProfit, FacebookLikes from (movie join person_directs_movie on Movie_id=movie.id) where Rating is not NULL and GrossProfit is not NULL and Country = 'USA'",
-    conn)
+data =  db.query(
+    "select Rating, GrossProfit, FacebookLikes from (movie join person_directs_movie on Movie_id=movie.id) where Rating is not NULL and GrossProfit is not NULL and Country = 'USA'")
 #Analyze rating vs facebook likes
 x = data["Rating"].values.reshape(-1, 1)  # set up x an y axis for plotting data
 y = data["FacebookLikes"].values.reshape(-1, 1)

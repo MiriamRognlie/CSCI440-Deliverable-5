@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import pandas
 from scipy import stats
 from sklearn import metrics
 from sqlalchemy import create_engine
@@ -12,16 +11,11 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 # Question 2: Does​ ​the​ ​length​ ​of​ ​a​ ​movie​ ​affect​ ​its​ ​profitability​ ​or​ ​ratings?​ ​Is​ ​there​ ​a​ ​point​ ​where​ ​a movie​ ​is​ ​too​ ​short​ ​or​ ​too​ ​long?​ ​Is​ ​the​ ​optimal​ ​length​ ​of​ ​a​ ​movie​ ​influenced​ ​by​ ​its​ ​genre?
-# Create the MySQL Engine
-engine = create_engine('mysql://root:blue@localhost:3306/imdb')  # create connection to our movie database
-conn = engine.connect()
-conn.begin()
 # Run a query so "data" is a table containing the runtime of all movies made in the USA and their profit (calculated as gross -budget)
-data = pandas.read_sql_query(
-    "SELECT Runtime, (cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) AS Profit FROM movie WHERE Country = 'USA' AND GrossProfit IS NOT NULL AND Budget IS NOT NULL and Runtime is not null order by Runtime",
-    conn)
+data =  db.query(
+    "SELECT Runtime, (cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) AS Profit FROM movie WHERE Country = 'USA' AND GrossProfit IS NOT NULL AND Budget IS NOT NULL and Runtime is not null order by Runtime")
 # Run a query so "data2" is a table containing the runtime of all movies and their ratings
-data2 = pandas.read_sql_query("SELECT Runtime, Rating FROM movie WHERE Rating IS NOT NULL and Country = 'USA' and Runtime is not null ORDER BY Runtime", conn)
+data2 = db.query("SELECT Runtime, Rating FROM movie WHERE Rating IS NOT NULL and Country = 'USA' and Runtime is not null ORDER BY Runtime")
 # Lets create
 plt.scatter(data["Runtime"], data["Profit"])  # set up a scatter plot to display data found from query
 plt.title("Movie Runtime vs Gross Profit")
@@ -63,12 +57,12 @@ plt.plot(x, pred, color='black',
 
 plt.show()
 
-genres = pandas.read_sql_table("genre", conn)  # read a list of all genres existing in database
+genres = db.query("genre")  # read a list of all genres existing in database
 
 for k, i in enumerate(genres["id"]):  # go through each genre that exists in the database
-    genre_grouped_profit = pandas.read_sql_query(
+    genre_grouped_profit =  db.query(
         "SELECT Runtime, (cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) AS Profit, genre_id FROM (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE GrossProfit is not null and Budget is not null and Country = 'USA' and Runtime is not null AND genre_id=" + str(
-            i), conn)
+            i))
     plt.scatter(genre_grouped_profit["Runtime"], genre_grouped_profit["Profit"], marker='o',
                 label=genres["Name"][k])  # show a line for each genre
 plt.title("Movie Runtime vs. Gross Profit", fontsize='small')
@@ -78,9 +72,9 @@ plt.legend()
 plt.show()
 
 for k, i in enumerate(genres["id"]):  # go through each genre that exists in the database
-    genre_grouped_rating = pandas.read_sql_query(
+    genre_grouped_rating =  db.query(
         "SELECT Runtime, Rating, genre_id FROM (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE Country = 'USA' and Rating is not null AND genre_id=" + str(
-            i), conn)
+            i))
     plt.scatter(genre_grouped_rating["Runtime"], genre_grouped_rating["Rating"], marker='o',
                 label=genres["Name"][k])  # show a line for each genre
 plt.title("Movie Runtime vs. Rating", fontsize='small')
