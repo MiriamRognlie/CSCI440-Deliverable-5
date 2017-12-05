@@ -13,11 +13,39 @@ def p5(db):
         print(country)
         for k, v in enumerate(genres["id"]):
             query = db.query(
-                "SELECT Year, GrossProfit FROM (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE revenue IS NOT NULL AND GrossProfit IS NOT NULL AND Country='" + country + "' AND Genre_id=" + str(
-                    v) + " GROUP BY Year")
-            plt.plot(query["Year"], query["GrossProfit"], label=genres["Name"][k])
+                "select Year, avg(cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) as AverageProfit from (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE budget IS NOT NULL AND GrossProfit IS NOT NULL AND Country='" + country + "' AND Genre_id=" + str(
+                    v) + " GROUP BY Year order by year")
+            plt.plot(query["Year"], query["AverageProfit"], label=genres["Name"][k])
         plt.title("Profitability of Genres in the " + country)
         plt.xlabel("Year")
-        plt.ylabel("Average Gross Profit")
+        plt.ylabel("Average Gross Profit (100 millions)")
         plt.legend()
         plt.show()
+
+    opt = ""
+    colors = ["blue", "red"]
+    while opt != "exit":
+        try:
+            gid = genres["id"][int(opt)]
+            i = 1
+            for country in countries["Country"]:
+                if (i > 2):
+                    break
+                i += 1
+                query = db.query(
+                        "select Year, avg(cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) as AverageProfit from (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE budget IS NOT NULL AND GrossProfit IS NOT NULL AND Country='" + country + "' AND Genre_id=" + str(gid) + " GROUP BY Year order by year")
+                plt.plot(query["Year"], query["AverageProfit"], label=country)
+                scatter_query = db.query("select Year, (cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED)) as grossProfit from (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE budget is not null and GrossProfit is not null and Country='" + country +"' and Genre_id=" + str(gid) + " order by year")
+                plt.scatter(scatter_query["Year"], scatter_query["grossProfit"], label='_nolegend_')
+            plt.legend()
+            plt.xlabel("Year")
+            plt.ylabel("Gross Profit (100 millions) [Lines are averaged by year]")
+            plt.title("Profitability of " + genres["Name"][int(opt)])
+            plt.show()
+        except:
+            pass
+        print("This data is available by genre as scatter plots for a single genre:")
+        for k,v in enumerate(genres["Name"]):
+            print("\t", k, ": ", v)
+        print("\t exit: Go back to problem selection.")
+        opt = input("Your Choice > ")

@@ -1,11 +1,8 @@
 import matplotlib.pyplot as plt
-from scipy import stats
-from sklearn import metrics
-from sqlalchemy import create_engine
-from sklearn import linear_model
 from sklearn.linear_model import Ridge
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
+from models.linear_model import linear_regression
 
 def p2(db):
     # Question 2: Does​ ​the​ ​length​ ​of​ ​a​ ​movie​ ​affect​ ​its​ ​profitability​ ​or​ ​ratings?​ ​Is​ ​there​ ​a​ ​point​ ​where​ ​a movie​ ​is​ ​too​ ​short​ ​or​ ​too​ ​long?​ ​Is​ ​the​ ​optimal​ ​length​ ​of​ ​a​ ​movie​ ​influenced​ ​by​ ​its​ ​genre?
@@ -39,17 +36,7 @@ def p2(db):
     y = data2["Rating"].reshape(-1, 1)
 
     # Lets do some linear regression on the Runtime/Rating
-    regr = linear_model.LinearRegression()  # calculate regression line for this data
-    regr.fit(x, y)
-    pred = regr.predict(x)
-    # The coefficients
-    print('Regression Coefficient (Slope): \n',
-          regr.coef_)  # prints out the regression line coefficients from the scatter plot
-    print('Pearson\'s Correlation: ', stats.pearsonr(x, y))  # calculates and prints Pearson's correlation coefficient
-    #  based on data from the scatter plot
-    print('Spearman\'s Correlation: ', stats.spearmanr(x, y))  # calculates and prints Spearman's rank correlation
-    # coefficient based on data from the scatter plot
-    print("Mean squared error: %.2f" % metrics.mean_squared_error(x, y))  # calculates and prints the mean squared error
+    pred = linear_regression(x, y)
     plt.plot(x, pred, color='black',
              linewidth=2)  # displayes a scatter plot popup window with the data from the queries and regression line
     plt.show()
