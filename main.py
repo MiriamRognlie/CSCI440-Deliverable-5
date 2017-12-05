@@ -12,10 +12,10 @@ from db import db
 
 i = ""
 
-database = db()
+database = db()#initialize a connection to the database
 print("Database connection initialized.")
 
-while(i != "exit"):
+while(i != "exit"):#commands to analyze each of the 5 questions
     if i == str(1):
         p1(database)
     elif i == str(2):
@@ -38,5 +38,5 @@ while(i != "exit"):
     print("Type 'exit' to exit.")
     i = input("Your Choice >")
 
-database.disconnect()
+database.disconnect()#close database connection connection
 print("Database connection closed.")

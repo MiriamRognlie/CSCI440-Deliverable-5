@@ -3,10 +3,10 @@ import matplotlib.pyplot as plt
 def p5(db):
     # Question 5: Over​ ​time,​ ​how​ ​has​ ​interest​ ​in​ ​specific​ ​genres​ ​changed​ ​for​ ​different​ ​regions​
     # ​around​ ​the world?​ ​What​ ​are​ ​the​ ​most​ ​popular​ ​genres​ ​now?​
-    countries = db.query("SELECT DISTINCT Country FROM movie")
-    genres = db.table("genre")
+    countries = db.query("SELECT DISTINCT Country FROM movie")#make a table containing all countries existing in the database, ordered by how many movies were made in each
+    genres = db.table("genre")#make a table containing all the genres which exist in the database
     i = 1
-    for country in countries["Country"]:
+    for country in countries["Country"]:#consider only movies made in hte first two countries, since samples from other countries are vary small
         if (i > 2):
             break
         i += 1
