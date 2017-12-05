@@ -30,6 +30,7 @@ def p4(db):
     plt.title("Gross Profitability of Content Ratings in the USA")
     plt.xlabel("Content Rating")
     plt.ylabel("Gross Profit")
+    plt.savefig("p4.png", dpi=500)
     plt.show()
 
     for k, v in enumerate(labels):

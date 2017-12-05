@@ -16,21 +16,26 @@ def p3(db):
     y = data["Rating"].values.reshape(-1, 1)
     # Lets
     # Lets create
+    plt.figure(figsize=(16, 9))
     plt.scatter(x, y, marker='o', s=10.0)  # set up a scatter plot to display data found from query
     plt.plot(x, linear_regression(x, y), color='black',
              linewidth=2)  # displays a scatter plot popup window with the data from the queries and regression line
     plt.title("Director's Facebook Likes vs. Movie Rating")
     plt.xlabel("Director's Facebook Likes")
     plt.ylabel("Movie Rating (out of 10)")
+    plt.savefig("p3-1.png", dpi=500)
     plt.show()
+
     #analyze data as profit vs facebook likes
     x = data["FacebookLikes"].values.reshape(-1, 1)  # set up x an y axis for plotting data
     y = data["gp"].values.reshape(-1, 1)
     # Lets create
+    plt.figure(figsize=(16, 9))
     plt.scatter(x, y, marker='o', s=10.0)  # set up a scatter plot to display data found from query
     plt.plot(x, linear_regression(x, y), color='black',
              linewidth=2)  # displays a scatter plot popup window with the data from the queries and regression line
     plt.title("Director's Facebook Likes VS. Gross Profit")
     plt.xlabel("Director's Facebook Likes")
     plt.ylabel("Movie Profit (100 million dollars")
+    plt.savefig("p3-2.png", dpi=500)
     plt.show()

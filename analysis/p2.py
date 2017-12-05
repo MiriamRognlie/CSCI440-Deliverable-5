@@ -10,6 +10,7 @@ def p2(db):
     # Run a query so "data2" is a table containing the runtime of all movies and their ratings
     data2 = db.query("SELECT Runtime, Rating FROM movie WHERE Rating IS NOT NULL and Country = 'USA' and Runtime is not null ORDER BY Runtime")
     # Lets create
+    plt.figure(figsize=(16, 9))
     plt.scatter(data["Runtime"], data["GrossProfit"])  # set up a scatter plot to display data found from query
     plt.title("Movie Runtime vs Gross Profit")
     plt.xlabel("Runtime (minutes)")
@@ -19,9 +20,10 @@ def p2(db):
     y = data["GrossProfit"].reshape(-1, 1)
     pred = ridge_regression(x, y, 3)
     plt.plot(x, pred, color='black')
-
+    plt.savefig("p2-1.png", dpi=500)
     plt.show()
 
+    plt.figure(figsize=(16, 9))
     plt.scatter(data2["Runtime"], data2["Rating"])  # set up a scatter plot to display data2 found from query
     plt.title("Movie Runtime vs. Rating")
     plt.xlabel("Runtime (minutes)")
@@ -34,10 +36,11 @@ def p2(db):
     pred = linear_regression(x, y)
     plt.plot(x, pred, color='black',
              linewidth=2)  # displayes a scatter plot popup window with the data from the queries and regression line
+    plt.savefig("p2-2.png", dpi=500)
     plt.show()
 
     genres = db.table("genre")  # read a list of all genres existing in database
-
+    plt.figure(figsize=(16, 9))
     for k, i in enumerate(genres["id"]):  # go through each genre that exists in the database
         genre_grouped_profit =  db.query(
             "SELECT Runtime, (cast(Revenue AS SIGNED) - cast(Budget AS SIGNED )) AS GrossProfit, genre_id FROM (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE Revenue is not null and Budget is not null and Country = 'USA' and Runtime is not null AND genre_id=" + str(
@@ -48,8 +51,10 @@ def p2(db):
     plt.xlabel("Runtime (minutes)")
     plt.ylabel("Gross Profit (100 million dollars)")
     plt.legend()
+    plt.savefig("p2-3.png", dpi=500)
     plt.show()
 
+    plt.figure(figsize=(16, 9))
     for k, i in enumerate(genres["id"]):  # go through each genre that exists in the database
         genre_grouped_rating =  db.query(
             "SELECT Runtime, Rating, genre_id FROM (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE Country = 'USA' and Rating is not null AND genre_id=" + str(
@@ -60,4 +65,5 @@ def p2(db):
     plt.xlabel("Runtime (minutes)")
     plt.ylabel("Rating")
     plt.legend()
+    plt.savefig("p2-4.png", dpi=500)
     plt.show()

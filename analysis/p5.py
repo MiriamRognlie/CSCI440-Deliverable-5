@@ -11,6 +11,7 @@ def p5(db):
             break
         i += 1
         print(country)
+        plt.figure(figsize=(16, 9))
         for k, v in enumerate(genres["id"]):
             query = db.query(
                 "select Year, avg(cast(Revenue AS SIGNED) - cast(Budget AS SIGNED )) as AverageProfit from (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE budget IS NOT NULL AND movie.Revenue IS NOT NULL AND Country='" + country + "' AND Genre_id=" + str(
@@ -20,6 +21,7 @@ def p5(db):
         plt.xlabel("Year")
         plt.ylabel("Average Gross Profit (100 millions)")
         plt.legend()
+        plt.savefig("p5-1-" + country + ".png", dpi=500)
         plt.show()
 
     opt = ""
@@ -28,6 +30,7 @@ def p5(db):
         try:
             gid = genres["id"][int(opt)]
             i = 1
+            plt.figure(figsize=(16, 9))
             for country in countries["Country"]:
                 if (i > 2):
                     break
@@ -41,6 +44,7 @@ def p5(db):
             plt.xlabel("Year")
             plt.ylabel("Gross Profit (100 millions) [Lines are averaged by year]")
             plt.title("Profitability of " + genres["Name"][int(opt)])
+            plt.savefig("p5-" + genres["Name"][int(opt)] + ".png", dpi=500)
             plt.show()
         except:
             pass
