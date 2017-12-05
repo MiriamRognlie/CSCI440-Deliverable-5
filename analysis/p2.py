@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
-from sklearn.linear_model import Ridge
-from sklearn.preprocessing import PolynomialFeatures
-from sklearn.pipeline import make_pipeline
 from models.linear_model import linear_regression
+from models.polynomial_model import ridge_regression
 
 def p2(db):
     # Question 2: Does​ ​the​ ​length​ ​of​ ​a​ ​movie​ ​affect​ ​its​ ​profitability​ ​or​ ​ratings?​ ​Is​ ​there​ ​a​ ​point​ ​where​ ​a movie​ ​is​ ​too​ ​short​ ​or​ ​too​ ​long?​ ​Is​ ​the​ ​optimal​ ​length​ ​of​ ​a​ ​movie​ ​influenced​ ​by​ ​its​ ​genre?
@@ -19,11 +17,8 @@ def p2(db):
 
     x = data["Runtime"].reshape(-1, 1)
     y = data["Profit"].reshape(-1, 1)
-
-    model = make_pipeline(PolynomialFeatures(3), Ridge())
-    model.fit(x, y)
-    y_plot = model.predict(x)
-    plt.plot(x, y_plot, color='black')
+    pred = ridge_regression(x, y, 3)
+    plt.plot(x, pred, color='black')
 
     plt.show()
 
