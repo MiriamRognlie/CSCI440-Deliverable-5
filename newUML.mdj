@@ -3863,6 +3863,29 @@
 							"headQualifiersCompartment": {
 								"$ref": "AAAAAAFgJDk4fEFXh0Y="
 							}
+						},
+						{
+							"_type": "UMLNoteView",
+							"_id": "AAAAAAFgJFmv0AxAV+Y=",
+							"_parent": {
+								"$ref": "AAAAAAFF+qBtyKM79qY="
+							},
+							"visible": true,
+							"enabled": true,
+							"lineColor": "#000000",
+							"fillColor": "#ffffff",
+							"fontColor": "#000000",
+							"font": "Arial;13;0",
+							"showShadow": true,
+							"containerChangeable": false,
+							"containerExtending": false,
+							"left": 952,
+							"top": 112,
+							"width": 193,
+							"height": 90,
+							"autoResize": false,
+							"text": "The Pandas library is used to query the database from our Python application. SciKit learn is used as the basis for all data represenation in the application.",
+							"wordWrap": true
 						}
 					]
 				},
