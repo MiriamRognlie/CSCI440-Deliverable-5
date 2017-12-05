@@ -7,19 +7,19 @@ def p4(db):
     # ​ratings are​ ​the​ ​safest​ ​for​ ​a​ ​movie?​
     # Run a query so "data1" is a table containing the profit for all movies made in the USA with a content rating of G
     data1 = db.query(
-        "SELECT (cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) AS Profit FROM movie WHERE Country='USA' AND ContentRating = 'G' AND Budget IS NOT NULL AND GrossProfit IS NOT NULL ORDER BY Profit DESC")
+        "SELECT (cast(Revenue AS SIGNED) - cast(Budget AS SIGNED )) AS Profit FROM movie WHERE Country='USA' AND ContentRating = 'G' AND Budget IS NOT NULL AND movie.Revenue IS NOT NULL ORDER BY Profit DESC")
     # Run a query so "data2" is a table containing the profit for all movies made in the USA with a content rating of PG
     data2 = db.query(
-        "SELECT (cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) AS Profit FROM movie WHERE Country='USA' AND ContentRating = 'PG' AND Budget IS NOT NULL AND GrossProfit IS NOT NULL ORDER BY Profit DESC")
+        "SELECT (cast(Revenue AS SIGNED) - cast(Budget AS SIGNED )) AS Profit FROM movie WHERE Country='USA' AND ContentRating = 'PG' AND Budget IS NOT NULL AND movie.Revenue IS NOT NULL ORDER BY Profit DESC")
     # Run a query so "data3" is a table containing the profit for all movies made in the USA with a content rating of PG-13
     data3 = db.query(
-        "SELECT (cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) AS Profit FROM movie WHERE Country='USA' AND ContentRating = 'PG-13' AND Budget IS NOT NULL AND GrossProfit IS NOT NULL ORDER BY Profit DESC")
+        "SELECT (cast(Revenue AS SIGNED) - cast(Budget AS SIGNED )) AS Profit FROM movie WHERE Country='USA' AND ContentRating = 'PG-13' AND Budget IS NOT NULL AND movie.Revenue IS NOT NULL ORDER BY Profit DESC")
     # Run a query so "data4" is a table containing the profit for all movies made in the USA with a content rating of R
     data4 = db.query(
-        "SELECT (cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) AS Profit FROM movie WHERE Country='USA' AND ContentRating = 'R' AND Budget IS NOT NULL AND GrossProfit IS NOT NULL ORDER BY Profit DESC")
+        "SELECT (cast(Revenue AS SIGNED) - cast(Budget AS SIGNED )) AS Profit FROM movie WHERE Country='USA' AND ContentRating = 'R' AND Budget IS NOT NULL AND movie.Revenue IS NOT NULL ORDER BY Profit DESC")
     # Run a query so "data5" is a table containing the profit for all movies made in the USA with a content rating of NC-17
     data5 = db.query(
-        "SELECT (cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) AS Profit FROM movie WHERE Country='USA' AND ContentRating = 'NC-17' AND Budget IS NOT NULL AND GrossProfit IS NOT NULL ORDER BY Profit DESC")
+        "SELECT (cast(Revenue AS SIGNED) - cast(Budget AS SIGNED )) AS Profit FROM movie WHERE Country='USA' AND ContentRating = 'NC-17' AND Budget IS NOT NULL AND movie.Revenue IS NOT NULL ORDER BY Profit DESC")
 
     data = [data1["Profit"], data2["Profit"], data3["Profit"], data4["Profit"],
             data5["Profit"]]  # combine all these tables into one

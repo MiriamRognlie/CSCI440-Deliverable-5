@@ -13,7 +13,7 @@ def p5(db):
         print(country)
         for k, v in enumerate(genres["id"]):
             query = db.query(
-                "select Year, avg(cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) as AverageProfit from (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE budget IS NOT NULL AND GrossProfit IS NOT NULL AND Country='" + country + "' AND Genre_id=" + str(
+                "select Year, avg(cast(Revenue AS SIGNED) - cast(Budget AS SIGNED )) as AverageProfit from (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE budget IS NOT NULL AND movie.Revenue IS NOT NULL AND Country='" + country + "' AND Genre_id=" + str(
                     v) + " GROUP BY Year order by year")
             plt.plot(query["Year"], query["AverageProfit"], label=genres["Name"][k])
         plt.title("Profitability of Genres in the " + country)
@@ -33,9 +33,9 @@ def p5(db):
                     break
                 i += 1
                 query = db.query(
-                        "select Year, avg(cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) as AverageProfit from (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE budget IS NOT NULL AND GrossProfit IS NOT NULL AND Country='" + country + "' AND Genre_id=" + str(gid) + " GROUP BY Year order by year")
+                        "select Year, avg(cast(Revenue AS SIGNED) - cast(Budget AS SIGNED )) as AverageProfit from (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE budget IS NOT NULL AND movie.Revenue IS NOT NULL AND Country='" + country + "' AND Genre_id=" + str(gid) + " GROUP BY Year order by year")
                 plt.plot(query["Year"], query["AverageProfit"], label=country)
-                scatter_query = db.query("select Year, (cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED)) as grossProfit from (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE budget is not null and GrossProfit is not null and Country='" + country +"' and Genre_id=" + str(gid) + " order by year")
+                scatter_query = db.query("select Year, (cast(Revenue AS SIGNED) - cast(Budget AS SIGNED)) as grossProfit from (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE budget is not null and movie.Revenue is not null and Country='" + country +"' and Genre_id=" + str(gid) + " order by year")
                 plt.scatter(scatter_query["Year"], scatter_query["grossProfit"], label='_nolegend_')
             plt.legend()
             plt.xlabel("Year")

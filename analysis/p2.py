@@ -6,17 +6,17 @@ def p2(db):
     # Question 2: Does​ ​the​ ​length​ ​of​ ​a​ ​movie​ ​affect​ ​its​ ​profitability​ ​or​ ​ratings?​ ​Is​ ​there​ ​a​ ​point​ ​where​ ​a movie​ ​is​ ​too​ ​short​ ​or​ ​too​ ​long?​ ​Is​ ​the​ ​optimal​ ​length​ ​of​ ​a​ ​movie​ ​influenced​ ​by​ ​its​ ​genre?
     # Run a query so "data" is a table containing the runtime of all movies made in the USA and their profit (calculated as gross-budget, since GrossProfic was inaccurately names in the database)
     data =  db.query(
-        "SELECT Runtime, (cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) AS Profit FROM movie WHERE Country = 'USA' AND GrossProfit IS NOT NULL AND Budget IS NOT NULL and Runtime is not null order by Runtime")
+        "SELECT Runtime, (cast(Revenue AS SIGNED) - cast(Budget AS SIGNED )) AS GrossProfit FROM movie WHERE Country = 'USA' AND movie.Revenue IS NOT NULL AND Budget IS NOT NULL and Runtime is not null order by Runtime")
     # Run a query so "data2" is a table containing the runtime of all movies and their ratings
     data2 = db.query("SELECT Runtime, Rating FROM movie WHERE Rating IS NOT NULL and Country = 'USA' and Runtime is not null ORDER BY Runtime")
     # Lets create
-    plt.scatter(data["Runtime"], data["Profit"])  # set up a scatter plot to display data found from query
+    plt.scatter(data["Runtime"], data["GrossProfit"])  # set up a scatter plot to display data found from query
     plt.title("Movie Runtime vs Gross Profit")
     plt.xlabel("Runtime (minutes)")
     plt.ylabel("Gross Profit (100 million dollars)")
 
     x = data["Runtime"].reshape(-1, 1)
-    y = data["Profit"].reshape(-1, 1)
+    y = data["GrossProfit"].reshape(-1, 1)
     pred = ridge_regression(x, y, 3)
     plt.plot(x, pred, color='black')
 
@@ -40,9 +40,9 @@ def p2(db):
 
     for k, i in enumerate(genres["id"]):  # go through each genre that exists in the database
         genre_grouped_profit =  db.query(
-            "SELECT Runtime, (cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) AS Profit, genre_id FROM (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE GrossProfit is not null and Budget is not null and Country = 'USA' and Runtime is not null AND genre_id=" + str(
+            "SELECT Runtime, (cast(Revenue AS SIGNED) - cast(Budget AS SIGNED )) AS GrossProfit, genre_id FROM (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE Revenue is not null and Budget is not null and Country = 'USA' and Runtime is not null AND genre_id=" + str(
                 i))
-        plt.scatter(genre_grouped_profit["Runtime"], genre_grouped_profit["Profit"], marker='o',
+        plt.scatter(genre_grouped_profit["Runtime"], genre_grouped_profit["GrossProfit"], marker='o',
                     label=genres["Name"][k])  # show a line for each genre
     plt.title("Movie Runtime vs. Gross Profit", fontsize='small')
     plt.xlabel("Runtime (minutes)")

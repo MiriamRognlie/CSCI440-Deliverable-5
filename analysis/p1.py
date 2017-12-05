@@ -7,9 +7,9 @@ def p1(db):
     # Gross Profit as actually just revenue. Run a query so "data" is a table containing the Budget for amomvie and the
     # profit returned from the box office.  This displayes only movies from the USA to ensure a common currency
     data = db.query(
-        "SELECT Budget, (cast(GrossProfit AS SIGNED) - cast(Budget AS SIGNED )) AS Profit FROM movie WHERE Country='USA' AND Budget IS NOT NULL AND GrossProfit IS NOT NULL ORDER BY Budget")
+        "SELECT Budget, (cast(Revenue AS SIGNED) - cast(Budget AS SIGNED )) AS GrossProfit FROM movie WHERE Country='USA' AND Budget IS NOT NULL AND movie.Revenue IS NOT NULL ORDER BY Budget")
     x = data["Budget"].values.reshape(-1, 1)  # set up x an y axis for plotting data
-    y = data["Profit"].values.reshape(-1, 1)
+    y = data["GrossProfit"].values.reshape(-1, 1)
     plt.scatter(x, y, marker='o', s=1.0)  # set up a scatter plot to display data found from query
 
     plt.plot(x, linear_regression(x, y), color='black',
