@@ -10,7 +10,7 @@ def p3(db):
     # Run a query so "data" is a table containing the rating and Gross profit for each movie and the number of likes its director has on
     # Facebook
     data =  db.query(
-        "select Rating, (cast(Revenue AS SIGNED) - cast(Budget AS SIGNED )) as gp, FacebookLikes from (movie join person_directs_movie on Movie_id=movie.id) where Rating is not NULL and Revenue is not NULL and Budget is not null and Country = 'USA'")
+        "select Rating, (cast(Revenue AS SIGNED) - cast(Budget AS SIGNED )) as gp, Person.FacebookLikes from (movie join (person join person_directs_movie on Person_id=person.id) on Movie_id=movie.id) where Rating is not NULL and Revenue is not NULL and Budget is not null and Country = 'USA'")
     #Analyze rating vs facebook likes
     x = data["FacebookLikes"].values.reshape(-1, 1)  # set up x an y axis for plotting data
     y = data["Rating"].values.reshape(-1, 1)

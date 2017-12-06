@@ -35,6 +35,7 @@ def p5(db):
                 if (i > 2):
                     break
                 i += 1
+                sorted_genre_profitability = []
                 query = db.query(
                         "select Year, avg(cast(Revenue AS SIGNED) - cast(Budget AS SIGNED )) as AverageProfit from (movie JOIN movie_has_genre ON Movie_id=movie.id) WHERE budget IS NOT NULL AND movie.Revenue IS NOT NULL AND Country='" + country + "' AND Genre_id=" + str(gid) + " GROUP BY Year order by year")
                 plt.plot(query["Year"], query["AverageProfit"], label=country)
